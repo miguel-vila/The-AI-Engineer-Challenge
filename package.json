@@ -1,0 +1,19 @@
+{
+  "name": "openai-chat-app",
+  "version": "1.0.0",
+  "description": "A full-stack OpenAI chat application with React frontend and FastAPI backend",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:frontend\"",
+    "dev:api": "cd api && python app.py",
+    "dev:frontend": "cd frontend && npm run dev",
+    "install:all": "npm install && cd frontend && npm install && cd ../api && pip install -r requirements.txt",
+    "build": "cd frontend && npm run build",
+    "start": "cd frontend && npm start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": ["openai", "chat", "react", "fastapi", "vercel"],
+  "author": "",
+  "license": "MIT"
+}

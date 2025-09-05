@@ -37,15 +37,15 @@ A modern, responsive React/Next.js frontend for the OpenAI Chat API. This applic
 
 ## Configuration
 
-The frontend connects to the API backend at `/api` by default (same domain in production). For local development, you can override this:
+The frontend automatically detects the environment:
+- **Development**: Connects to `http://localhost:8000/api` (local API server)
+- **Production**: Connects to `/api` (same domain, Vercel routing)
 
-1. Set the `API_URL` environment variable:
+You can override the API URL by setting the `API_URL` environment variable:
 
-   ```bash
-   API_URL=http://localhost:8000 npm run dev
-   ```
-
-2. Or update the `next.config.js` file
+```bash
+API_URL=http://your-custom-api-url npm run dev
+```
 
 ## Usage
 

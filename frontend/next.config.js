@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   env: {
-    API_URL: process.env.API_URL || '/api',
+    API_URL: process.env.API_URL || (process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api' : '/api'),
   },
 }
 

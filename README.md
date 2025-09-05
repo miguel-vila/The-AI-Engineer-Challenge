@@ -84,6 +84,30 @@ Got everything in place? Let's move on!
 </details>
 
 <details>
+  <summary>🏠 Local Development Setup</summary>
+
+For local development, you can run both the frontend and API together:
+
+1. **Install all dependencies**:
+   ```bash
+   npm run install:all
+   ```
+
+2. **Start both services**:
+   ```bash
+   npm run dev
+   ```
+
+3. **Access your application**:
+   - Frontend: [http://localhost:3000](http://localhost:3000)
+   - API: [http://localhost:8000](http://localhost:8000)
+   - API Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
+
+The frontend automatically connects to the local API server during development.
+
+</details>
+
+<details>
   <summary>🔥Setting Up for Vibe Coding Success </summary>
 
 While it is a bit counter-intuitive to set things up before jumping into vibe-coding - it's important to remember that there exists a gradient betweeen AI-Assisted Development and Vibe-Coding. We're only reaching *slightly* into AI-Assisted Development for this challenge, but it's worth it!
