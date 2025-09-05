@@ -1,4 +1,5 @@
 import { Settings } from '../types/chat'
+import { useState, useEffect } from 'react'
 
 interface SettingsPanelProps {
   settings: Settings
@@ -7,6 +8,36 @@ interface SettingsPanelProps {
 }
 
 export default function SettingsPanel({ settings, onSettingsChange, onClearMessages }: SettingsPanelProps) {
+  const [apiStatus, setApiStatus] = useState<'checking' | 'connected' | 'error'>('checking')
+  const [lastChecked, setLastChecked] = useState<Date | null>(null)
+
+  const checkApiHealth = async () => {
+    try {
+      setApiStatus('checking')
+      const response = await fetch(`${process.env.API_URL || '/api'}/health`)
+      
+      if (response.ok) {
+        const data = await response.json()
+        if (data.status === 'ok') {
+          setApiStatus('connected')
+        } else {
+          setApiStatus('error')
+        }
+      } else {
+        setApiStatus('error')
+      }
+    } catch (error) {
+      console.error('API health check failed:', error)
+      setApiStatus('error')
+    } finally {
+      setLastChecked(new Date())
+    }
+  }
+
+  useEffect(() => {
+    checkApiHealth()
+  }, [])
+
   const handleInputChange = (field: keyof Settings, value: string) => {
     onSettingsChange({
       ...settings,
@@ -83,14 +114,36 @@ export default function SettingsPanel({ settings, onSettingsChange, onClearMessa
 
       {/* API Status */}
       <div className="pt-4 border-t border-gray-200">
-        <h3 className="text-sm font-medium text-gray-700 mb-2">API Status</h3>
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="text-sm font-medium text-gray-700">API Status</h3>
+          <button
+            onClick={checkApiHealth}
+            className="text-xs text-blue-600 hover:text-blue-800 underline"
+            disabled={apiStatus === 'checking'}
+          >
+            {apiStatus === 'checking' ? 'Checking...' : 'Refresh'}
+          </button>
+        </div>
         <div className="flex items-center space-x-2">
-          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-          <span className="text-sm text-gray-600">Connected to API</span>
+          <div className={`w-2 h-2 rounded-full ${
+            apiStatus === 'checking' ? 'bg-yellow-500 animate-pulse' :
+            apiStatus === 'connected' ? 'bg-green-500' :
+            'bg-red-500'
+          }`}></div>
+          <span className="text-sm text-gray-600">
+            {apiStatus === 'checking' ? 'Checking API...' :
+             apiStatus === 'connected' ? 'Connected to API' :
+             'API Connection Failed'}
+          </span>
         </div>
         <p className="text-xs text-gray-500 mt-1">
           API URL: {process.env.API_URL || '/api'}
         </p>
+        {lastChecked && (
+          <p className="text-xs text-gray-400 mt-1">
+            Last checked: {lastChecked.toLocaleTimeString()}
+          </p>
+        )}
       </div>
     </div>
   )
