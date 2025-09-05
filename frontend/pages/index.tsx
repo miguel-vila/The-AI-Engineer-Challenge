@@ -29,7 +29,7 @@ export default function Home() {
     setIsLoading(true)
 
     try {
-      const response = await fetch(`${process.env.API_URL || 'http://localhost:8000'}/api/chat`, {
+      const response = await fetch(`${process.env.API_URL || '/api'}/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

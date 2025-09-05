@@ -89,7 +89,7 @@ export default function SettingsPanel({ settings, onSettingsChange, onClearMessa
           <span className="text-sm text-gray-600">Connected to API</span>
         </div>
         <p className="text-xs text-gray-500 mt-1">
-          API URL: {process.env.API_URL || 'http://localhost:8000'}
+          API URL: {process.env.API_URL || '/api'}
         </p>
       </div>
     </div>
